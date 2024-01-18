@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const maxAllowedDate = new Date();
 maxAllowedDate.setMonth(maxAllowedDate.getMonth() + 3);
+// eslint-disable-next-line no-unused-vars
 const maxAllowedDateOnly = maxAllowedDate.toISOString().split('T')[0];
 
 const currentDate = new Date();
@@ -52,13 +53,22 @@ const AppointmentScheduler = () => {
       // Customize the date format
       
    
-      
       if (selectedDate >= currentDateOnly && selectedDate <= maxAllowedDateOnly) {
-       
-        const confirmationMessage = `Appointment booked on ${selectedDate} at ${selectedTime}`;
-        window.alert(confirmationMessage);
+        // Ask for confirmation
+        const userConfirmed = window.confirm(
+          `Are you sure you want to book an appointment on ${selectedDate} at ${selectedTime}?`
+        );
+
+        // If the user confirms, proceed with booking
+        if (userConfirmed) {
+          const confirmationMessage = `Appointment booked on ${selectedDate} at ${selectedTime}`;
+          window.alert(confirmationMessage);
+          // You can add additional logic here to update bookedTimeSlots or perform other actions
+        } else {
+          window.alert('Booking canceled.');
+        }
       } else {
-        window.alert('Cannot book on a past date or time. Please select a valid date and time.');
+        window.alert('Please select a date within the allowed range.');
       }
     }
   };
