@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 
+const maxAllowedDate = new Date();
+maxAllowedDate.setMonth(maxAllowedDate.getMonth() + 3);
+const maxAllowedDateOnly = maxAllowedDate.toISOString().split('T')[0];
+
+const currentDate = new Date();
+      const currentDateOnly = currentDate.toISOString().split('T')[0];
+
 const AppointmentScheduler = () => {
   // State to manage selected date and time
   const [selectedDate, setSelectedDate] = useState(null);
@@ -28,6 +35,10 @@ const AppointmentScheduler = () => {
     setSelectedTime(newTime);
   };
 
+  const maxAllowedDate = new Date();
+  maxAllowedDate.setMonth(maxAllowedDate.getMonth() + 3);
+  const maxAllowedDateOnly = maxAllowedDate.toISOString().split('T')[0];
+
   // Filter out booked time slots from available time slots
   const filteredAvailableTimeSlots = availableTimeSlots.filter(
     (time) => !bookedTimeSlots.find((slot) => slot.date === selectedDate && slot.time === time)
@@ -36,13 +47,13 @@ const AppointmentScheduler = () => {
   // Function to handle booking confirmation
   const handleBookingConfirmation = () => {
     if (selectedDate && selectedTime) {
-      const currentDate = new Date();
+      
 
       // Customize the date format
-      const currentDateOnly = currentDate.toISOString().split('T')[0];
+      
    
       
-      if (selectedDate > currentDateOnly) {
+      if (selectedDate >= currentDateOnly && selectedDate <= maxAllowedDateOnly) {
        
         const confirmationMessage = `Appointment booked on ${selectedDate} at ${selectedTime}`;
         window.alert(confirmationMessage);
@@ -63,6 +74,8 @@ const AppointmentScheduler = () => {
           type="date"
           id="datePicker"
           onChange={handleDateChange}
+          min={currentDateOnly}
+          max={maxAllowedDateOnly}
         />
       </div>
 
