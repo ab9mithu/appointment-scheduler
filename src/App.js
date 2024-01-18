@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+const currentDate = new Date();
+const currentDateOnly = currentDate.toISOString().split('T')[0];
+
 const AppointmentScheduler = () => {
   // State to manage selected date and time
   const [selectedDate, setSelectedDate] = useState(null);
@@ -36,10 +39,10 @@ const AppointmentScheduler = () => {
   // Function to handle booking confirmation
   const handleBookingConfirmation = () => {
     if (selectedDate && selectedTime) {
-      const currentDate = new Date();
+      
 
       // Customize the date format
-      const currentDateOnly = currentDate.toISOString().split('T')[0];
+      
    
       
       if (selectedDate > currentDateOnly) {
@@ -63,6 +66,7 @@ const AppointmentScheduler = () => {
           type="date"
           id="datePicker"
           onChange={handleDateChange}
+          min={currentDateOnly}
         />
       </div>
 
